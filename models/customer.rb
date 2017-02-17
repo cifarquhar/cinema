@@ -28,8 +28,14 @@ class Customer
   end
 
   def update()
-    sql = "UPDATE customers SET (name,funds) = ('#{@name}', #{@funds}) WHERE id = #{@id};"
+    sql = "UPDATE customers SET (name,funds) = ('#{@name}', #{@funds}) WHERE id = #{@id}"
     SqlRunner.run(sql)
+  end
+
+  def deduct_funds(ticket_price)
+    sql = "UPDATE customers SET (funds) = (#{@funds - ticket_price}) WHERE id = #{@id}"
+    SqlRunner.run(sql)
+    @funds -= ticket_price
   end
 
   def self.delete_all()
