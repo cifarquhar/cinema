@@ -4,6 +4,8 @@ require_relative('models/film.rb')
 require_relative('models/ticket.rb')
 
 
+Customer.delete_all
+
 customer1 = Customer.new('name' => "Colin", 'funds' => 100)
 customer2 = Customer.new('name' => "Vicky", 'funds' => 200)
 customer3 = Customer.new('name' => "Ringo", 'funds' => 50)
