@@ -26,6 +26,10 @@ class Ticket
     self.get_many(sql)
   end
 
+  def update()
+    sql = "UPDATE tickets SET (customer_id,film_id) = (#{@customer_id}, #{@film_id}) WHERE id = #{@id};"
+    SqlRunner.run(sql)
+  end
 
 
 end
