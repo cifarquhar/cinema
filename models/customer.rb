@@ -16,6 +16,16 @@ class Customer
     return customers.map {|customer| Customer.new(customer)}   
   end
 
+  def save()
+    sql = "INSERT INTO customers (name,funds) VALUES ('#{@name}',#{@funds}) RETURNING id"
+    customer = SqlRunner.run(sql)[0]
+    @id = customer['id'].to_i
+  end
+
+  def self.all()
+    sql = "SELECT * FROM customers"
+    self.get_many(sql)
+  end
 
 
 
