@@ -42,6 +42,12 @@ class Film
     SqlRunner.run(sql)
   end
 
+  def count_customers()
+    sql = "SELECT c.* FROM customers c INNER JOIN tickets t ON t.customer_id = c.id WHERE t.film_id = #{@id}"
+    films_customers = Film.get_many(sql)
+    number_of_customers = films_customers.count
+  end
+
 
 
 end
