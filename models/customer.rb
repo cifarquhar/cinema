@@ -32,12 +32,6 @@ class Customer
     SqlRunner.run(sql)
   end
 
-  def deduct_funds(ticket_price)
-    sql = "UPDATE customers SET (funds) = (#{@funds - ticket_price}) WHERE id = #{@id}"
-    SqlRunner.run(sql)
-    @funds -= ticket_price
-  end
-
   def self.delete_all()
     sql = "DELETE FROM customers"
     SqlRunner.run(sql)
@@ -46,6 +40,18 @@ class Customer
   def delete()
     sql = "DELETE FROM customers WHERE id = #{@id}"
     SqlRunner.run(sql)
+  end
+
+  def deduct_funds(ticket_price)
+    sql = "UPDATE customers SET (funds) = (#{@funds - ticket_price}) WHERE id = #{@id}"
+    SqlRunner.run(sql)
+    @funds -= ticket_price
+  end
+
+  def buy_tickets(film)
+    new_ticket = Ticket.new({'customer_id' => @id, 'film_id' => film.id})
+    deduct_funds(film.price)
+    new_ticket.save()
   end
 
 
