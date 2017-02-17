@@ -46,6 +46,7 @@ class Film
     sql = "SELECT c.* FROM customers c INNER JOIN tickets t ON t.customer_id = c.id WHERE t.film_id = #{@id}"
     films_customers = Film.get_many(sql)
     number_of_customers = films_customers.count
+    return number_of_customers
   end
 
 

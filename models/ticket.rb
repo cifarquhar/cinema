@@ -8,6 +8,7 @@ class Ticket
     @id = options['id'].to_i if options['id']
     @customer_id = options['customer_id']
     @film_id = options['film_id']
+    @time = VARCHAR(255)
   end
 
   def self.get_many(sql)
