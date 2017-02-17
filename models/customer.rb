@@ -11,6 +11,11 @@ class Customer
     @funds = options['funds']
   end
 
+  def self.get_many(sql)
+    customers = SqlRunner.run(sql)
+    return customers.map {|customer| Customer.new(customer)}   
+  end
+
 
 
 
