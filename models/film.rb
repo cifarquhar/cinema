@@ -27,6 +27,11 @@ class Film
     self.get_many(sql)
   end
 
+  def update()
+    sql = "UPDATE films SET (title,price) = ('#{@title}', #{@price}) WHERE id = #{@id};"
+    SqlRunner.run(sql)
+  end
+
 
 
 end
