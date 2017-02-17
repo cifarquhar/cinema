@@ -54,6 +54,12 @@ class Customer
     new_ticket.save()
   end
 
+  def count_tickets()
+    sql = "SELECT tickets.* FROM tickets INNER JOIN customers on tickets.customer_id = customers.id WHERE tickets.customer_id = #{@id}"
+    tickets = Ticket.get_many(sql)
+    number_of_tickets = tickets.count
+  end
+
 
 
 
