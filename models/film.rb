@@ -44,11 +44,18 @@ class Film
 
   def count_customers()
     sql = "SELECT c.* FROM customers c INNER JOIN tickets t ON t.customer_id = c.id WHERE t.film_id = #{@id}"
-    films_customers = Film.get_many(sql)
+    films_customers = Customer.get_many(sql)
     number_of_customers = films_customers.count
     return number_of_customers
   end
 
+  def most_popular_time()
+    sql = "SELECT t.* FROM tickets t INNER JOIN films f ON t.film_id = f.id WHERE t.film_id = #{@id}"
+    films_tickets = Ticket.get_many(sql)
+    films_tickets_times = films_tickets.map {|ticket| ticket.show_time}
+    most_popular = films_tickets_times.mode
+    return most_popular
+  end
 
 
 end

@@ -8,7 +8,7 @@ class Ticket
     @id = options['id'].to_i if options['id']
     @customer_id = options['customer_id']
     @film_id = options['film_id']
-    @time = VARCHAR(255)
+    @show_time = options['show_time']
   end
 
   def self.get_many(sql)
@@ -17,7 +17,7 @@ class Ticket
   end
 
   def save()
-    sql = "INSERT INTO tickets (customer_id,film_id) VALUES (#{@customer_id},#{@film_id}) RETURNING id"
+    sql = "INSERT INTO tickets (customer_id,film_id,show_time) VALUES (#{@customer_id},#{@film_id},'#{@show_time}') RETURNING id"
     ticket = SqlRunner.run(sql)[0]
     @id = ticket['id'].to_i
   end
