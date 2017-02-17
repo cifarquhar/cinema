@@ -1,0 +1,32 @@
+require_relative('../db/sql_runner.rb')
+
+class Film
+
+  attr_reader :id
+  attr_accessor :title, :price
+
+  def initialize(options)
+    @id = options['id'].to_i if options['id']
+    @title = options['title']
+    @price = options['price']
+  end
+
+  def self.get_many(sql)
+    films = SqlRunner.run(sql)
+    return films.map {|film| Film.new(film)}   
+  end
+
+  def save()
+    sql = "INSERT INTO films (title,price) VALUES ('#{@title}',#{@price}) RETURNING id"
+    film = SqlRunner.run(sql)[0]
+    @id = film['id'].to_i
+  end
+
+  def self.all()
+    sql = "SELECT * FROM films"
+    self.get_many(sql)
+  end
+
+
+
+end
