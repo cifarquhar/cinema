@@ -48,8 +48,8 @@ class Customer
     @funds -= ticket_price
   end
 
-  def buy_tickets(film)
-    new_ticket = Ticket.new({'customer_id' => @id, 'film_id' => film.id})
+  def buy_tickets(film,time)
+    new_ticket = Ticket.new({'customer_id' => @id, 'film_id' => film.id, 'show_time' => time})
     deduct_funds(film.price)
     new_ticket.save()
   end
