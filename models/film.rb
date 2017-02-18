@@ -49,11 +49,19 @@ class Film
     return number_of_customers
   end
 
+  def mode(input_array)
+    count_array = input_array.uniq.map {|e| [e, input_array.count(e)]}
+    sorted_array = count_array.sort_by {|_,num| -num}
+    trimmed_array = sorted_array.take_while {|_,num| num == sorted_array.first.last}
+    modal_value = trimmed_array.map(&:first)
+    return modal_value
+  end
+
   def most_popular_time()
     sql = "SELECT t.* FROM tickets t INNER JOIN films f ON t.film_id = f.id WHERE t.film_id = #{@id}"
     films_tickets = Ticket.get_many(sql)
     films_tickets_times = films_tickets.map {|ticket| ticket.show_time}
-    most_popular = films_tickets_times.mode
+    most_popular = mode(films_tickets_times)
     return most_popular
   end
 
