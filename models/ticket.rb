@@ -17,9 +17,17 @@ class Ticket
   end
 
   def save()
-    sql = "INSERT INTO tickets (customer_id,film_id,show_time) VALUES (#{@customer_id},#{@film_id},'#{@show_time}') RETURNING id"
-    ticket = SqlRunner.run(sql)[0]
+    ticket_sql = "INSERT INTO tickets (customer_id,film_id,show_time) VALUES (#{@customer_id},#{@film_id},'#{@show_time}') RETURNING id"
+    ticket = SqlRunner.run(ticket_sql)[0]
     @id = ticket['id'].to_i
+    counter_sql = "SELECT films.* FROM films INNER JOIN tickets on tickets.film_id = films.id WHERE films.id = #{@film_id}" 
+    films_to_update = SqlRunner.run(counter_sql)
+    film_to_update = films_to_update.find {|film| film['id'] = @film_id}
+    # puts film_to_update
+    # tickets_to_update = film_to_update['tickets_sold']
+    # if tickets_to_update["#{@show_time}"] == ticket['show_time']
+    #     tickets_to_update["#{@show_time}"] += 1
+    # end
   end
 
   def self.all()

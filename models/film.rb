@@ -3,14 +3,14 @@ require_relative('../db/sql_runner.rb')
 class Film
 
   attr_reader :id
-  attr_accessor :title, :price, :tickets_sold
+  attr_accessor :title, :price, :tickets_sold, :ticket_limit
 
   def initialize(options)
     @id = options['id'].to_i if options['id']
     @title = options['title']
     @price = options['price']
     @ticket_limit = options['ticket_limit']
-    @tickets_sold = Hash.new
+    @tickets_sold = Hash.new(0)
   end
 
   def self.get_many(sql)
@@ -44,7 +44,7 @@ class Film
     SqlRunner.run(sql)
   end
 
-  def count_customers()
+  def customers()
     sql = "SELECT c.* FROM customers c INNER JOIN tickets t ON t.customer_id = c.id WHERE t.film_id = #{@id}"
     films_customers = Customer.get_many(sql)
     number_of_customers = films_customers.count

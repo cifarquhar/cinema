@@ -12,7 +12,8 @@ CREATE TABLE films(
   id SERIAL4 PRIMARY KEY,
   title VARCHAR(255),
   price INT2,
-  ticket_limit INT2
+  ticket_limit INT2 --,
+--  tickets_sold HSTORE
 );
 
 CREATE TABLE tickets(
